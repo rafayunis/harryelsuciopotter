@@ -76,7 +76,7 @@ const HomeScreen = () => {
       <Header showBackButton={false} title="Home Screen" />
       <View style={styles.mainContainer}>
         <Separator size={20} />
-        <DefaultButton text="Go To Experimental Screen" onPress={goToExperimentalScreen} />
+        <DefaultButton text="Go To Experimental Screen dev" onPress={goToExperimentalScreen} />
         <Separator size={20} />
         <FlatList
           keyExtractor={flatlistKeyExtractor}
