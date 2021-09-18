@@ -16,7 +16,10 @@ const getIconName = (routeName: string) => {
   let iconName = '';
   switch (routeName) {
     case 'HomeTab':
-      iconName = 'home';
+      iconName = 'menu-book';
+      break;
+    case 'CharactersTab':
+      iconName = 'badge';
       break;
     case 'HistoryTab':
       iconName = 'history';
@@ -36,10 +39,13 @@ const navigatorScreenOptions = ({ route }: { route: Route }) => ({
     return <MaterialIcon name={iconName} size={iconSize} color={color} />;
   },
   tabBarAllowFontScaling: false,
-  tabBarActiveTintColor: colors.mainOrange,
-  tabBarInactiveTintColor: colors.lightBlue,
+  tabBarActiveTintColor: colors.yellowPotter,
+  tabBarInactiveTintColor: colors.lightGrey,
   tabBarLabelStyle: {
     fontSize: 12,
+  },
+  tabBarStyle: {
+    backgroundColor: '#7F0909'
   },
   headerShown: false,
 });
@@ -47,7 +53,8 @@ const navigatorScreenOptions = ({ route }: { route: Route }) => ({
 const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={navigatorScreenOptions}>
-      <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Home' }} />
+      <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Libros' }} />
+      <Tab.Screen name="CharactersTab" component={HistoryScreen} options={{ title: 'Personajes' }} />
       <Tab.Screen name="HistoryTab" component={HistoryScreen} options={{ title: 'History' }} />
     </Tab.Navigator>
   );
