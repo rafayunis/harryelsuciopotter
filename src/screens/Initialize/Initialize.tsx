@@ -18,7 +18,7 @@ const goToMainTabs = async () => {
 const checkIfUserIsLoggedIn = async () => {
   try {
     const value = await AsyncStorage.getItem('userLoggedInFlag');
-    if (value !== null && value === 'true') {
+    if (value !== null && value === 'true' || true) {
       goToMainTabs();
     } else {
       replaceRoute('AuthStack');

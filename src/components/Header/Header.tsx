@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, TouchableOpacity, View } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -17,6 +17,7 @@ interface Props {
   showBackButton?: boolean;
   title: string;
 }
+const image = '../../assets/images/top-bg.png';
 
 const Header = ({
   onPressBackButton,
@@ -28,18 +29,20 @@ const Header = ({
   return (
     <>
       <SafeAreaView edges={['top']} />
+      <ImageBackground source={require(image)} resizeMode="cover" style={styles.image}>
       <View style={styles.mainContainer}>
         {showBackButton ? (
           <TouchableOpacity onPress={onPressBackButton} style={styles.sideButtonContainer}>
-            <MaterialIcon name="navigate-before" size={35} color={colors.black} />
+            <MaterialIcon name="navigate-before" size={35} color={colors.white} />
           </TouchableOpacity>
         ) : (
           <Separator isHorizontal size={40} />
         )}
         <View style={styles.titleContainer}>
-          <Typography align="center" numberOfLines={2} variant="bold" size={17}>
-            {title}
-          </Typography>
+          <Image
+                source={require('../../assets/images/hp-logo.png')}
+                style={{ width: 40, height: 44 }}
+              />
         </View>
         {RightSideComponent ? (
           <TouchableOpacity onPress={onPressRightButton} style={styles.sideButtonContainer}>
@@ -49,6 +52,7 @@ const Header = ({
           <Separator isHorizontal size={40} />
         )}
       </View>
+      </ImageBackground>
     </>
   );
 };
