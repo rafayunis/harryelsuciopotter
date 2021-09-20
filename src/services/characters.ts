@@ -23,7 +23,7 @@ export const getAllCharacters = async () => {
   }
 };
 
-export const getCharactersById = async (id: number) => {
+export const getCharacterById = async (id: number) => {
   try {
     let serviceResponse;
 

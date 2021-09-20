@@ -11,4 +11,7 @@ type Character = {
   id: number;
   name: string;
   house: string;
+  birth: string;
+  species: string;
+  gender: string;
 };

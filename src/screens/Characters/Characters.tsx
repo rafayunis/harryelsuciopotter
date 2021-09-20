@@ -9,6 +9,7 @@ import styles from './styles';
 import { colors } from '../../utils/theme';
 import { IS_ANDROID } from '../../utils/constants';
 import useCharactersData from './hooks/useCharactersData';
+import { goToScreen } from '../../navigation/controls';
 
 const GetHouseImage = ({house}:{house:string}) => {
     const imagesPath = '../../assets/images/houses/';
@@ -34,11 +35,11 @@ const GetHouseImage = ({house}:{house:string}) => {
 };
 
 const ListItem = ({ id, name, house }: { id: number; name: string; house:string }) => (
-  <TouchableOpacity>
+  <TouchableOpacity onPress={() => goToScreen('CharacterDetails', { id })}>
     <View style={styles.listItemContainerShadow}>
       <View style={[styles.listItemContainer, IS_ANDROID ? styles.listItemContainerShadow : null]}>
         <GetHouseImage house={house}/>
-        <Typography numberOfLines={2} align="center" size={13}>
+        <Typography numberOfLines={2} align="center" size={14}>
           {name}
         </Typography>
       </View>
