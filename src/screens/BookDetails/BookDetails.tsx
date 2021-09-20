@@ -1,39 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
 
-import { Header, Separator, Typography } from '../../components';
-import { getBookById } from '../../services';
-
+import { DefaultButton, Header, Separator, Typography } from '../../components';
+import useBookData from './hooks/useBookData';
 import styles from './styles';
 import { colors } from '../../utils/theme';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 // @ts-ignore
 const BookDetailsScreen = ({ route }) => {
   const { id, title } = route.params;
+  const [ refreshFlag, setRefreshFlag ] = useState<boolean>(false);
+  const { book, loading, errorOccurred } = useBookData(id,refreshFlag);
 
-  const [book, setBook] = useState<Book | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const netInfo = useNetInfo();
 
-  const getBooksData = async () => {
-    setLoading(true);
-    try {
-      const { success, data } = await getBookById(id);
-      if (success) {
-        setBook(data);
-      } else {
-        Alert.alert(`Error getting the details of the book: ${title}`);
-      }
-    } catch (error) {
-      console.log(`Error getting book with id: ${id} in BookDetailsScreen`, error);
-      Alert.alert(`Error getting the details of the book: ${title}`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getBooksData();
-  }, []);
+  const toggleRefreshFlag = useCallback(() => {
+    setRefreshFlag(!refreshFlag);
+  }, [refreshFlag]);
 
   if (loading) {
     return (
@@ -46,13 +30,39 @@ const BookDetailsScreen = ({ route }) => {
     );
   }
 
+  if (errorOccurred) {
+    return (
+      <View style={styles.wholeScreenCenter}>
+        <Typography size={20}>An unknown error occurred :'(</Typography>
+        <Separator size={15} />
+        <DefaultButton text="Retry" onPress={toggleRefreshFlag} />
+      </View>
+    );
+  }
+
   return (
     <>
       <Header title={title} />
       <View style={styles.mainContainer}>
-        <Typography size={18}>Book Detail Screen</Typography>
-        <Separator />
-        <Typography>{JSON.stringify(book, null, 2)}</Typography>
+        <View style={styles.mainTitle}>
+          <Typography color={colors.redPotter} size={25} variant={'bold'} align='center'>
+            {book.title}
+          </Typography>
+        </View>
+      </View>
+      <View style={styles.detailsContainer}>
+        <Image source={{uri:book.book_covers[0].URL}} style={styles.image} />
+        <View style={styles.detailsText}>
+            <Typography variant={'bold'} size={12}>Autor:</Typography><Typography>{book.author}</Typography>
+            <Separator />
+            <Typography variant={'bold'} size={12}>Fecha Publicación (UK): </Typography><Typography>{book.publish_date[0].UK}</Typography>
+            <Separator />
+            <Typography variant={'bold'} size={12}>Linea de tiempo de la historia: </Typography>
+            <FlatList
+              data={book.plot_take_place_years}
+              renderItem={({item}) => <Typography>{item}</Typography>}
+            />
+        </View>
       </View>
     </>
   );

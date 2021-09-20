@@ -33,7 +33,7 @@ const Header = ({
       <View style={styles.mainContainer}>
         {showBackButton ? (
           <TouchableOpacity onPress={onPressBackButton} style={styles.sideButtonContainer}>
-            <MaterialIcon name="navigate-before" size={35} color={colors.black} />
+            <MaterialIcon name="navigate-before" size={35} color={colors.white} />
           </TouchableOpacity>
         ) : (
           <Separator isHorizontal size={40} />
@@ -41,7 +41,7 @@ const Header = ({
         <View style={styles.titleContainer}>
           <Image
                 source={require('../../assets/images/hp-logo.png')}
-                style={{ width: 35, height: 35 }}
+                style={{ width: 40, height: 44 }}
               />
         </View>
         {RightSideComponent ? (
