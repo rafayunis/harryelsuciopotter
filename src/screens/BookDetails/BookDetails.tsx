@@ -7,6 +7,8 @@ import styles from './styles';
 import { colors } from '../../utils/theme';
 import { useNetInfo } from '@react-native-community/netinfo';
 
+const plotYearsFlatlistKeyExtractor = (item: String) => `${item}`;
+
 // @ts-ignore
 const BookDetailsScreen = ({ route }) => {
   const { id, title } = route.params;
@@ -59,6 +61,7 @@ const BookDetailsScreen = ({ route }) => {
             <Separator />
             <Typography variant={'bold'} size={12}>Linea de tiempo de la historia: </Typography>
             <FlatList
+              keyExtractor={plotYearsFlatlistKeyExtractor}
               data={book.plot_take_place_years}
               renderItem={({item}) => <Typography>{item}</Typography>}
             />

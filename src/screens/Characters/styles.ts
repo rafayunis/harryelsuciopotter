@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  booksListWrapper: {
+  charactersListWrapper: {
     backgroundColor: '#ffffff',
     flex: 1,
     borderRadius: 20,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 20,
   },
-  booksListContainer: {
+  charactersListContainer: {
     backgroundColor: '#F9F9F9',
     alignItems: 'center',
     flex: 1,
@@ -54,16 +54,17 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderRadius: 25,
     borderWidth: 1,
-    height: 220,
+    height: 150,
     justifyContent: 'flex-start',
     paddingHorizontal: 0,
     width: Dimensions.get('screen').width/2.4 - 12,
   },
   listItemImage: {
-    height: 160,
-    width:'100%',
+    height: 90,
+    width: 80,
     borderRadius: 25,
     marginBottom: 10,
+    resizeMode: 'stretch',
   },
   listItemContainerShadow: {
     shadowColor: colors.black,

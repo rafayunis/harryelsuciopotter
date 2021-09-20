@@ -1,43 +1,60 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Image, ScrollView, TextInput, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Image, TextInput, View } from 'react-native';
 import { ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { useNetInfo } from '@react-native-community/netinfo';
 
-import { AlertModal, DefaultButton, Header, Separator, Typography } from '../../components';
+import { DefaultButton, Header, Separator, Typography } from '../../components';
 import styles from './styles';
 import { colors } from '../../utils/theme';
-import useBooksData from './hooks/useBooksData';
-import { goToScreen } from '../../navigation/controls';
 import { IS_ANDROID } from '../../utils/constants';
+import useCharactersData from './hooks/useCharactersData';
 
-
-const goToExperimentalScreen = () => {
-  goToScreen('Experimental');
+const GetHouseImage = ({house}:{house:string}) => {
+    const imagesPath = '../../assets/images/houses/';
+    let path = null;
+    switch (house) {
+      case 'Gryffindor':
+        path = <Image source={require('../../assets/images/houses/gryffindor.webp')} style={styles.listItemImage} />;
+        break;
+      case 'Hufflepuff':
+        path = <Image source={require('../../assets/images/houses/hufflepuff.webp')} style={styles.listItemImage} />;
+        break;
+      case 'Slytherin':
+        path = <Image source={require('../../assets/images/houses/slytherin.webp')} style={styles.listItemImage} />;
+        break;
+      case 'Ravenclaw':
+        path = <Image source={require('../../assets/images/houses/ravenclaw.webp')} style={styles.listItemImage} />;
+        break;
+      default:
+        path = <Image source={require('../../assets/images/houses/nohouse.png')} style={styles.listItemImage} />;
+        break;
+    }
+    return (path);
 };
 
-const ListItem = ({ id, title, imageUrl }: { id: number; title: string; imageUrl:string }) => (
-  <TouchableOpacity onPress={() => goToScreen('BookDetails', { id, title })}>
+const ListItem = ({ id, name, house }: { id: number; name: string; house:string }) => (
+  <TouchableOpacity>
     <View style={styles.listItemContainerShadow}>
       <View style={[styles.listItemContainer, IS_ANDROID ? styles.listItemContainerShadow : null]}>
-        <Image source={{uri:imageUrl}} style={styles.listItemImage} />
+        <GetHouseImage house={house}/>
         <Typography numberOfLines={2} align="center" size={13}>
-          {title}
+          {name}
         </Typography>
       </View>
     </View>
   </TouchableOpacity>
 );
 
-const flatlistKeyExtractor = (item: Book) => `${item.id}`;
+const flatlistKeyExtractor = (item: Character) => `${item.id}`;
 
-const renderFlatlistItem = ({ item }: { item: Book }) => (
-  <ListItem id={item.id} title={item.title} imageUrl={item.book_covers[0].URL}/>
+const renderFlatlistItem = ({ item }: { item: Character }) => (
+  <ListItem id={item.id} name={item.name} house={item.house}/>
 );
 
 const CharactersScreen = () => {
   const [refreshFlag, setRefreshFlag] = useState<boolean>(false);
-  const { books, loading, errorOccurred } = useBooksData(refreshFlag);
+  const { characters, loading, errorOccurred } = useCharactersData(refreshFlag);
 
   const netInfo = useNetInfo();
 
@@ -76,37 +93,37 @@ const CharactersScreen = () => {
 
   return (
     <>
-      <Header title="Books" />
+      <Header title="Personajes" showBackButton={false} />
       <View style={styles.mainContainer}>
         <View style={styles.searchFieldStyle}>
             <MaterialIcon name="search" size={30} color={colors.redPotter} style={styles.iconSearchStyle}/>
             <TextInput
                 allowFontScaling={false}
                 autoCapitalize="none"
-                placeholder="Buscar un Libro..."
+                placeholder="Buscar personaje..."
                 style={styles.textInput}
             />
         </View>
         <Typography color={colors.redPotter} size={25} variant="bold">
-          LIBROS
+          PERSONAJES
         </Typography>
       </View>
-      <View style={styles.booksListWrapper}>
-        <View style={styles.booksListContainer}>
-          <FlatList
-          columnWrapperStyle={{justifyContent:'space-between', }}
-          keyExtractor={flatlistKeyExtractor}
-          refreshing={loading}
-          horizontal={false}
-          onRefresh={toggleRefreshFlag}
-          data={books}
-          renderItem={renderFlatlistItem}
-          numColumns={2}
-          ItemSeparatorComponent={Separator}
-          contentContainerStyle={styles.flatlistContent}
-          style={styles.flatList}
-        />
-      </View>
+      <View style={styles.charactersListWrapper}>
+        <View style={styles.charactersListContainer}>
+            <FlatList
+            columnWrapperStyle={{justifyContent:'space-between', }}
+            keyExtractor={flatlistKeyExtractor}
+            refreshing={loading}
+            horizontal={false}
+            onRefresh={toggleRefreshFlag}
+            data={characters}
+            renderItem={renderFlatlistItem}
+            numColumns={2}
+            ItemSeparatorComponent={Separator}
+            contentContainerStyle={styles.flatlistContent}
+            style={styles.flatList}
+          />
+        </View>
       </View>
     </>
   );

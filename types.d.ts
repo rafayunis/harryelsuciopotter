@@ -6,3 +6,9 @@ type Book = {
   plot_take_place_years: Array;
   book_covers: Array;
 };
+
+type Character = {
+  id: number;
+  name: string;
+  house: string;
+};

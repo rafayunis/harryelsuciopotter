@@ -1,11 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { DefaultButton, Header, Separator, Typography } from '../../components';
+import {Header, Separator, Typography } from '../../components';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 
 import { goToScreen, resetNavigation } from '../../navigation/controls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { colors } from '../../utils/theme';
 
 const goToExperimentalScreen = () => {
   goToScreen('Experimental');
@@ -25,11 +27,10 @@ const HistoryScreen = () => {
     <>
       <Header showBackButton={false} title="History" />
       <View style={styles.mainContainer}>
-        <Typography size={18}>History Screen</Typography>
+        <Typography size={18}>Historial</Typography>
         <Separator size={10} />
-        <DefaultButton text="Go To Experimental Screen" onPress={goToExperimentalScreen} />
+        <MaterialIcon name="lock-clock" size={30} color={colors.redPotter}/>
         <Separator size={10} />
-        <DefaultButton variant="secondary" text="Log Out" onPress={logOut} />
       </View>
     </>
   );
