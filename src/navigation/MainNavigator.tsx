@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AuthStack from './AuthStack';
 import TabNavigator from './TabNavigator';
-import { BookDetailsScreen, InitializeScreen, BooksScreen } from '../screens';
+import { BookDetailsScreen, InitializeScreen, BooksScreen, CharacterDetailsScreen } from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +14,7 @@ const MainNavigator = () => (
     <Stack.Screen name="TabNavigator" component={TabNavigator} />
     <Stack.Screen name="Books" component={BooksScreen} />
     <Stack.Screen name="BookDetails" component={BookDetailsScreen} />
+    <Stack.Screen name="CharacterDetails" component={CharacterDetailsScreen} />
   </Stack.Navigator>
 );
 
