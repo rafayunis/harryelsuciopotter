@@ -1,5 +1,5 @@
 # harrypotterAPP
-Práctica de implementación de React Native del Curso dictado por Patagonian Academy
+Práctica de implementación en React Native del Curso "Creación de apps con React Native de manera profesional" dictado por Patagonian Academy
 
 App de info sobre el universo Harry Potter usando API
 https://harry-potter-api-6e4rgg2vka-uc.a.run.app/api/1
