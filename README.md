@@ -1,5 +1,5 @@
 # harryelsuciopotter
-Práctica de implementación de React Native
+Práctica de implementación de React Native del Curso dictado por Patagonian Academy
 
 Para correr en windows ejecutar npx react-native run-android    (para android)
 
